@@ -1,0 +1,149 @@
+@startuml
+'Object Colors Setting
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+
+legend top
+|=        Object  |=           Colors  |
+| Hardware  |<back:#A0522D>                                    |
+| System  |<back:#9370DB>                                    |
+| Layer  |<back:#FEE599>                                    |
+| Component |<back:#E0FFFF>                                    |
+| Module |<back:#E2EFD9>                                    |
+| Uint |<back:#7FFFD4>                                    |
+| Tiny |<back:#FFC0CB>                                    |
+endlegend
+
+skinparam rectangle {
+    BackgroundColor #87CEFA
+    BorderColor #000000
+}
+
+'---- App Component ----
+package "SWDD-001\nApp" as App #E0FFFF{  
+  '---- Module ----
+  component "SWDD-001-001\nmain.c" as main #E2EFD9 {
+    ' Units
+    [App State Machine] as AppSm #7FFFD4
+  }
+
+  component "SWDD-001-004\nSmApp.c" as SmApp #E2EFD9 {
+    ' Units
+    [Init State] as SM_INIT #7FFFD4
+    [Task State] as SM_TASK #7FFFD4
+    [Sleep State] as SM_SLEEP #7FFFD4
+  }
+  
+  component "SWDD-001-002\nInitApp.c" as InitApp #E2EFD9 {
+    ' Units
+    [Init Interfaces] as InitIfApp #7FFFD4
+  }
+
+  component "SWDD-001-003\nPinIoApp.c" as PinIoApp #E2EFD9 {
+    ' Units
+    [Init PinIOs] as InitPinIoApp #7FFFD4
+  }
+
+  component "SWDD-001-006\nTaskApp.c" as TaskApp #E2EFD9{
+    ' Units
+    [Task 100ms] as Task100msApp #7FFFD4
+    [Task 1s] as Task1sApp #7FFFD4
+  }
+
+  component "SWDD-001-007\nClkApp.c" as ClkApp #E2EFD9 {
+    ' Units
+    [Init Clocks] as InitClkApp #7FFFD4
+  }
+
+  component "SWDD-001-005\nRtosApp.c" as RtosApp #E2EFD9 {
+    ' Units
+    [Init Task] as InitTaskApp #7FFFD4
+    [Task 100ms Process] as Task100msProcessApp #7FFFD4
+    [Task 1s Process] as Task1sProcessApp #7FFFD4
+  }
+  '----------------
+}
+
+'---- Service Component ----
+package "SWDD-002\nService" as Service #E0FFFF {
+  '---- Module ----
+  component "SWDD-002-001\nUds.c" as UdsService #E2EFD9 {
+    ' Units
+
+  }
+
+  component "SWDD-002-002\nFuSa.c" as FuSaService #E2EFD9 {
+    ' Units
+
+  }
+
+  component "SWDD-002-003\nSecurity.c" as SecurityService #E2EFD9 {
+    ' Units
+
+  }
+  '----------------
+}
+
+'---- HAL Component ----
+package "SWDD-003\nHAL" as HAL #E0FFFF {
+  '---- Module ----
+  component "SWDD-003-001\nClkHal.c" as ClkHal #E2EFD9 {
+    ' Units
+    [Init Clocks for HAL] as InitClkHal #7FFFD4
+  }
+
+  component "SWDD-003-002\nPinIoHal.c" as PinIoHal #E2EFD9 {
+    ' Units
+    [Init PinIO for HAL] as InitPinIOHal #7FFFD4
+    [PinIO Output Control for HAL] as PinIoOutHal #7FFFD4
+  }
+  '----------------
+}
+
+'---- OS Component ----
+package "SWDD-004\nOS" as OS #E0FFFF {
+  '---- Module ----
+  component "SWDD-004-001\nfreeRTOS.c" as freeRTOSHal #E2EFD9 {
+    ' Units
+
+  }
+  '----------------
+}
+ 
+'---- Drivers Component ----
+package "SWDD-005\nDrivers" as Drivers #E0FFFF {
+  '---- Module ----
+  component "SWDD-005-001\nClkDrv.c" as ClkDrv #E2EFD9 {
+    ' Units
+    [Init Clocks Driver] as InitClkDrv #7FFFD4
+  }
+
+  component "SWDD-005-002\nPinIoDrv.c" as PinIoDrv #E2EFD9 {
+    ' Units
+    [Init PinIO Driver] as InitPinIODrv #7FFFD4
+    [PinIO Output Control Driver] as PinIoOutDrv #7FFFD4
+  }
+  '----------------
+}
+
+'---- join modules ----
+'joins
+AppSm --> SmApp
+SM_INIT --> InitApp
+SM_TASK --> TaskApp
+InitIfApp --> InitClkApp
+InitClkApp --> InitClkHal
+InitClkHal --> InitClkDrv
+
+InitIfApp --> InitPinIoApp
+InitPinIoApp --> InitPinIOHal
+InitPinIOHal --> InitPinIODrv
+
+InitIfApp --> InitTaskApp
+Task100msProcessApp --> Task100msApp
+Task1sProcessApp --> Task1sApp
+Task1sApp --> PinIoOutHal
+PinIoOutHal --> PinIoOutDrv
+'----------------------
+
+@enduml
