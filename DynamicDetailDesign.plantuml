@@ -5,7 +5,7 @@ skinparam defaultFontSize 12
 
 legend top
 |=        Object  |=           Colors  |
-| Hardware  |<back:#A0522D>                                    |
+| Microcontroller  |<back:#A0522D>                                    |
 | System  |<back:#9370DB>                                    |
 | Layer  |<back:#FEE599>                                    |
 | Component |<back:#E0FFFF>                                    |
@@ -103,7 +103,7 @@ package "SWDD-003\nHAL" as HAL #E0FFFF {
 '---- OS Component ----
 package "SWDD-004\nOS" as OS #E0FFFF {
   '---- Module ----
-  component "SWDD-004-001\nfreeRTOS.c" as freeRTOSHal #E2EFD9 {
+  component "freeRTOS Modules" as freeRTOSModules #E2EFD9 {
     ' Units
 
   }
