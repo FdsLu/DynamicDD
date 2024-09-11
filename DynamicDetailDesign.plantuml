@@ -20,8 +20,8 @@ skinparam rectangle {
 }
 
 '---- App Component ----
-package "SWDD-001\nApp" as App #E0FFFF{  
-  '---- Module ----
+package "SWDD-001\nApp" as App #E0FFFF{
+    '---- Module ----
   component "SWDD-001-001\nmain.c" as main #E2EFD9 {
     ' Units
     [App State Machine] as AppSm #7FFFD4
@@ -69,17 +69,33 @@ package "SWDD-002\nService" as Service #E0FFFF {
   '---- Module ----
   component "SWDD-002-001\nUds.c" as UdsService #E2EFD9 {
     ' Units
-
+    [SWDD-002-001-001 Init UDS] as InitUds #7FFFD4
+    [SWDD-002-001-002 UDS_MainFunction] as UdsMainFunction #7FFFD4
+    [SWDD-002-001-003 UDS_ProcessRequest] as UdsProcessRequest #7FFFD4
+    [SWDD-002-001-004 UDS_TransmitResponse] as UdsTransmitResponse #7FFFD4
+    [SWDD-002-001-005 UDS_ProcessDiagnosticSessionControl] as UdsProcessDiagnosticSessionControl #7FFFD4
+    [SWDD-002-001-006 UDS_ProcessEcuReset] as UdsProcessEcuReset #7FFFD4
+    [SWDD-002-001-007 UDS_ProcessTesterPresent] as UdsProcessTesterPresent #7FFFD4
+    [SWDD-002-001-008 UDS_Session_IsAllowed] as UdsSessionIsAllowed1 #7FFFD4
+    [SWDD-002-001-009 UDS_Session_IsAllowed] as UdsSessionIsAllowed2 #7FFFD4
+    [SWDD-002-001-010 UDS_Session_Change] as UdsSessionChange #7FFFD4
+    [SWDD-002-001-011 UDS_Session_Init] as UdsSessionInit #7FFFD4
+    [SWDD-002-001-012 UDS_ProcessRequestDownload] as UdsProcessRequestDownload #7FFFD4
+    [SWDD-002-001-013 UDS_ProcessTransferData] as UdsProcessTransferData #7FFFD4
+    [SWDD-002-001-014 UDS_ProcessRequestTransferExit] as UdsProcessRequestTransferExit #7FFFD4
+    [SWDD-002-001-015 UDS_ProcessRoutineControl] as UdsProcessRoutineControl #7FFFD4
+    [SWDD-002-001-016 CANTP Functions] as CANTP #7FFFD4
+    [SWDD-002-001-017 DCM Functions] as DCM #7FFFD4
+    [SWDD-002-001-018 DEM Functions] as DEM #7FFFD4
+    [SWDD-002-001-019 NVM Functions] as NVM #7FFFD4
   }
 
   component "SWDD-002-002\nFuSa.c" as FuSaService #E2EFD9 {
     ' Units
-
   }
 
   component "SWDD-002-003\nSecurity.c" as SecurityService #E2EFD9 {
     ' Units
-
   }
   '----------------
 }
@@ -105,11 +121,10 @@ package "SWDD-004\nOS" as OS #E0FFFF {
   '---- Module ----
   component "freeRTOS Modules" as freeRTOSModules #E2EFD9 {
     ' Units
-
   }
   '----------------
 }
- 
+
 '---- Drivers Component ----
 package "SWDD-005\nDrivers" as Drivers #E0FFFF {
   '---- Module ----
@@ -127,7 +142,6 @@ package "SWDD-005\nDrivers" as Drivers #E0FFFF {
 }
 
 '---- join modules ----
-'joins
 AppSm --> SmApp
 SM_INIT --> InitApp
 SM_TASK --> TaskApp
