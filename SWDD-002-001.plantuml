@@ -30,23 +30,45 @@ skinparam rectangle {
 rectangle "Uds.c" as UDS #E2EFD9 {
     ' CANTP Module
     component "SWDD-002-001-016 CANTP Functions" as CANTP #7FFFD4 {
-        rectangle "SWDD-002-001-016-001 CanTp_Init" as CTI #FFC0CB
-        rectangle "SWDD-002-001-016-002 CanTp_MainFunction" as CTMF #FFC0CB
-        rectangle "SWDD-002-001-016-003 CanTp_Transmit" as CTT #FFC0CB
-        rectangle "SWDD-002-001-016-004 CanTp_RxIndication" as CTRI #FFC0CB
-        rectangle "SWDD-002-001-016-005 CanTp_ProcessSingleFrame" as CTPSF #FFC0CB
-        rectangle "SWDD-002-001-016-006 CanTp_ProcessFirstFrame" as CTPFF #FFC0CB
-        rectangle "SWDD-002-001-016-007 CanTp_SendFrame" as CTSF #FFC0CB
+        rectangle "SWDD-002-001-016-001 CanTp_LoadConfig" as CLC #FFC0CB
+        rectangle "SWDD-002-001-016-002 CanTp_Init" as CTI #FFC0CB
+        rectangle "SWDD-002-001-016-003 CanTp_Manager_Init" as CTMI #FFC0CB
+        rectangle "SWDD-002-001-016-004 CanTp_Manager_MainFunction" as CTMMF #FFC0CB
+        rectangle "SWDD-002-001-016-005 CanTp_Manager_StartTransmission" as CTMST #FFC0CB
+        rectangle "SWDD-002-001-016-006 CanTp_Manager_ProcessReceivedFrame" as CTMPRF #FFC0CB
+        rectangle "SWDD-002-001-016-007 CanTp_ProcessSingleFrame" as CTPSF #FFC0CB
+        rectangle "SWDD-002-001-016-008 CanTp_ProcessFirstFrame" as CTPFF #FFC0CB
+        rectangle "SWDD-002-001-016-009 CanTp_ProcessConsecutiveFrame" as CTPCF #FFC0CB
+        rectangle "SWDD-002-001-016-010 CanTp_ProcessFlowControlFrame" as CTPFCF #FFC0CB
+        rectangle "SWDD-002-001-016-011 CanTp_SendConsecutiveFrame" as CTSCF #FFC0CB
+        rectangle "SWDD-002-001-016-012 CanTp_SendFlowControlFrame" as CTSFCF #FFC0CB
+        rectangle "SWDD-002-001-016-013 CanTp_Utils_BuildSingleFrame" as CTUBSF #FFC0CB
+        rectangle "SWDD-002-001-016-014 CanTp_Utils_BuildFirstFrame" as CTUBFF #FFC0CB
+        rectangle "SWDD-002-001-016-015 CanTp_Utils_BuildConsecutiveFrame" as CTUBCF #FFC0CB
+        rectangle "SWDD-002-001-016-016 CanTp_Utils_BuildFlowControlFrame" as CTUBFCF #FFC0CB
+        rectangle "SWDD-002-001-016-017 CanTp_MainFunction" as CTMF #FFC0CB
+        rectangle "SWDD-002-001-016-018 CanTp_Transmit" as CTT #FFC0CB
+        rectangle "SWDD-002-001-016-019 CanTp_RxIndication" as CTRI #FFC0CB
+        rectangle "SWDD-002-001-016-020 CanTp_SendFrame" as CTSF #FFC0CB
 
-        CTI --> CTMF
-        CTRI --> CTPSF
-        CTRI --> CTPFF
-        CTPSF --> CTSF
-        CTPFF --> CTSF
-        CTT --> CTSF
+        CLC --> CTI
+        CTMI --> CTI
+        CTMMF --> CTMF
+        CTMST --> CTT
+        CTMPRF --> CTRI
+        CTPSF --> CTMPRF
+        CTPFF --> CTMPRF
+        CTPCF --> CTMPRF
+        CTPFCF --> CTMPRF
+        CTSCF --> CTSF
+        CTSFCF --> CTSF
+        CTUBSF --> CTSF
+        CTUBFF --> CTSF
+        CTUBCF --> CTSF
+        CTUBFCF --> CTSF
     }
 
-    ' DCM Module
+    ' DCM Module (unchanged)
     component "SWDD-002-001-017 DCM Functions" as DCM #7FFFD4 {
         rectangle "SWDD-002-001-017-001 DCM_Init" as DI #FFC0CB
         rectangle "SWDD-002-001-017-002 DCM_MainFunction" as DMF #FFC0CB
@@ -65,7 +87,7 @@ rectangle "Uds.c" as UDS #E2EFD9 {
         DPR --> DCSA
     }
 
-    ' DEM Module
+    ' DEM Module (unchanged)
     component "SWDD-002-001-018 DEM Functions" as DEM #7FFFD4 {
         rectangle "SWDD-002-001-018-001 DEM_Init" as DEI #FFC0CB
         rectangle "SWDD-002-001-018-002 DEM_MainFunction" as DEMF #FFC0CB
@@ -80,7 +102,7 @@ rectangle "Uds.c" as UDS #E2EFD9 {
         DGES --> DEMRE
     }
 
-    ' NVM Module
+    ' NVM Module (unchanged)
     component "SWDD-002-001-019 NVM Functions" as NVM #7FFFD4 {
         rectangle "SWDD-002-001-019-001 NVM_Init" as NI #FFC0CB
         rectangle "SWDD-002-001-019-002 NVM_MainFunction" as NMF #FFC0CB
