@@ -1,0 +1,107 @@
+@startuml
+skinparam defaultFontName Arial
+skinparam defaultFontSize 8
+skinparam padding 2
+skinparam componentStyle uml2
+
+' Legend
+legend top
+|=        Elements  |=           Colors  |
+| Microcontroller  |<back:#A0522D>                                    |
+| System  |<back:#9370DB>                                    |
+| Layer  |<back:#FEE599>                                    |
+| Component |<back:#E0FFFF>                                    |
+| Module |<back:#E2EFD9>                                    |
+| Uint |<back:#7FFFD4>                                    |
+| Tiny |<back:#FFC0CB>                                    |
+endlegend
+
+' Color definitions
+skinparam component {
+    BackgroundColor #7FFFD4
+    BorderColor #20B2AA
+}
+skinparam rectangle {
+    BackgroundColor #FFC0CB
+    BorderColor #FF69B4
+}
+
+' Uds.c Module
+rectangle "Uds.c" as UDS #E2EFD9 {
+    ' CANTP Module
+    component "SWDD-002-001-016 CANTP Functions" as CANTP #7FFFD4 {
+        rectangle "SWDD-002-001-016-001 CanTp_Init" as CTI #FFC0CB
+        rectangle "SWDD-002-001-016-002 CanTp_MainFunction" as CTMF #FFC0CB
+        rectangle "SWDD-002-001-016-003 CanTp_Transmit" as CTT #FFC0CB
+        rectangle "SWDD-002-001-016-004 CanTp_RxIndication" as CTRI #FFC0CB
+        rectangle "SWDD-002-001-016-005 CanTp_ProcessSingleFrame" as CTPSF #FFC0CB
+        rectangle "SWDD-002-001-016-006 CanTp_ProcessFirstFrame" as CTPFF #FFC0CB
+        rectangle "SWDD-002-001-016-007 CanTp_SendFrame" as CTSF #FFC0CB
+
+        CTI --> CTMF
+        CTRI --> CTPSF
+        CTRI --> CTPFF
+        CTPSF --> CTSF
+        CTPFF --> CTSF
+        CTT --> CTSF
+    }
+
+    ' DCM Module
+    component "SWDD-002-001-017 DCM Functions" as DCM #7FFFD4 {
+        rectangle "SWDD-002-001-017-001 DCM_Init" as DI #FFC0CB
+        rectangle "SWDD-002-001-017-002 DCM_MainFunction" as DMF #FFC0CB
+        rectangle "SWDD-002-001-017-003 DCM_ProcessRequest" as DPR #FFC0CB
+        rectangle "SWDD-002-001-017-004 UDS_ProcessReadDataByIdentifier" as DPRDI #FFC0CB
+        rectangle "SWDD-002-001-017-005 UDS_ProcessWriteDataByIdentifier" as DPWDI #FFC0CB
+        rectangle "SWDD-002-001-017-006 DCM_GetDIDInfo" as DGDI #FFC0CB
+        rectangle "SWDD-002-001-017-007 DCM_CheckSessionAllowed" as DCSA #FFC0CB
+
+        DI --> DMF
+        DMF --> DPR
+        DPR --> DPRDI
+        DPR --> DPWDI
+        DPRDI --> DGDI
+        DPWDI --> DGDI
+        DPR --> DCSA
+    }
+
+    ' DEM Module
+    component "SWDD-002-001-018 DEM Functions" as DEM #7FFFD4 {
+        rectangle "SWDD-002-001-018-001 DEM_Init" as DEI #FFC0CB
+        rectangle "SWDD-002-001-018-002 DEM_MainFunction" as DEMF #FFC0CB
+        rectangle "SWDD-002-001-018-003 DEM_SetEventStatus" as DSES #FFC0CB
+        rectangle "SWDD-002-001-018-004 DEM_GetEventStatus" as DGES #FFC0CB
+        rectangle "SWDD-002-001-018-005 DEM_EventManager_ReportEvent" as DEMRE #FFC0CB
+        rectangle "SWDD-002-001-018-006 DEM_LogEvent" as DLE #FFC0CB
+
+        DEI --> DEMF
+        DSES --> DEMRE
+        DEMRE --> DLE
+        DGES --> DEMRE
+    }
+
+    ' NVM Module
+    component "SWDD-002-001-019 NVM Functions" as NVM #7FFFD4 {
+        rectangle "SWDD-002-001-019-001 NVM_Init" as NI #FFC0CB
+        rectangle "SWDD-002-001-019-002 NVM_MainFunction" as NMF #FFC0CB
+        rectangle "SWDD-002-001-019-003 NVM_ReadMemory" as NRM #FFC0CB
+        rectangle "SWDD-002-001-019-004 NVM_WriteMemory" as NWM #FFC0CB
+        rectangle "SWDD-002-001-019-005 NVM_ProcessService" as NPS #FFC0CB
+
+        NI --> NMF
+        NPS --> NRM
+        NPS --> NWM
+    }
+}
+
+' Inter-module connections
+CTRI -[#0000FF]-> DPR : Diagnostic Request
+CTSF <-[#0000FF]- DPR : Diagnostic Response
+DPRDI -[#008000]-> DGES : Read DTC
+DPWDI -[#008000]-> DSES : Write DTC
+DPRDI -[#FF0000]-> NRM : Read Config
+DPWDI -[#FF0000]-> NWM : Write Config
+DEMRE -[#800080]-> NWM : Store Event
+DEI -[#800080]-> NRM : Load Stored Events
+
+@enduml
