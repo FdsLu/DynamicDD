@@ -10,7 +10,7 @@ legend top
 | Layer  |<back:#FEE599>                                    |
 | Component |<back:#E0FFFF>                                    |
 | Module |<back:#E2EFD9>                                    |
-| Uint |<back:#7FFFD4>                                    |
+| Unit |<back:#7FFFD4>                                    |
 | Tiny |<back:#FFC0CB>                                    |
 endlegend
 
@@ -23,67 +23,63 @@ skinparam rectangle {
 package "SWDD-001\nApp" as App #E0FFFF{
     '---- Module ----
   component "SWDD-001-001\nmain.c" as main #E2EFD9 {
-    ' Units
     [App State Machine] as AppSm #7FFFD4
   }
 
   component "SWDD-001-004\nSmApp.c" as SmApp #E2EFD9 {
-    ' Units
     [Init State] as SM_INIT #7FFFD4
     [Task State] as SM_TASK #7FFFD4
     [Sleep State] as SM_SLEEP #7FFFD4
   }
   
   component "SWDD-001-002\nInitApp.c" as InitApp #E2EFD9 {
-    ' Units
     [Init Interfaces] as InitIfApp #7FFFD4
   }
 
   component "SWDD-001-003\nPinIoApp.c" as PinIoApp #E2EFD9 {
-    ' Units
     [Init PinIOs] as InitPinIoApp #7FFFD4
   }
 
   component "SWDD-001-006\nTaskApp.c" as TaskApp #E2EFD9{
-    ' Units
     [Task 100ms] as Task100msApp #7FFFD4
     [Task 1s] as Task1sApp #7FFFD4
   }
 
   component "SWDD-001-007\nClkApp.c" as ClkApp #E2EFD9 {
-    ' Units
     [Init Clocks] as InitClkApp #7FFFD4
   }
 
   component "SWDD-001-005\nRtosApp.c" as RtosApp #E2EFD9 {
-    ' Units
     [Init Task] as InitTaskApp #7FFFD4
     [Task 100ms Process] as Task100msProcessApp #7FFFD4
     [Task 1s Process] as Task1sProcessApp #7FFFD4
   }
-  '----------------
+
+  ' New Communication and Storage App Modules
+  component "SWDD-001-010\nCANApp.c" as CANApp #E2EFD9 {
+    [Init CAN] as InitCANApp #7FFFD4
+    [CAN Tx Process] as CANTxApp #7FFFD4
+    [CAN Rx Process] as CANRxApp #7FFFD4
+  }
+
+  component "SWDD-001-011\nUARTApp.c" as UARTApp #E2EFD9 {
+    [Init UART] as InitUARTApp #7FFFD4
+    [UART Tx Process] as UARTTxApp #7FFFD4
+    [UART Rx Process] as UARTRxApp #7FFFD4
+  }
+
+  component "SWDD-001-012\nFlashApp.c" as FlashApp #E2EFD9 {
+    [Init Flash] as InitFlashApp #7FFFD4
+    [Flash Read] as FlashReadApp #7FFFD4
+    [Flash Write] as FlashWriteApp #7FFFD4
+  }
 }
 
 '---- Service Component ----
 package "SWDD-002\nService" as Service #E0FFFF {
-  '---- Module ----
   component "SWDD-002-001\nUds.c" as UdsService #E2EFD9 {
-    ' Units
     [SWDD-002-001-001 Init UDS] as InitUds #7FFFD4
     [SWDD-002-001-002 UDS_MainFunction] as UdsMainFunction #7FFFD4
-    [SWDD-002-001-003 UDS_ProcessRequest] as UdsProcessRequest #7FFFD4
-    [SWDD-002-001-004 UDS_TransmitResponse] as UdsTransmitResponse #7FFFD4
-    [SWDD-002-001-005 UDS_ProcessDiagnosticSessionControl] as UdsProcessDiagnosticSessionControl #7FFFD4
-    [SWDD-002-001-006 UDS_ProcessEcuReset] as UdsProcessEcuReset #7FFFD4
-    [SWDD-002-001-007 UDS_ProcessTesterPresent] as UdsProcessTesterPresent #7FFFD4
-    [SWDD-002-001-008 UDS_Session_IsAllowed] as UdsSessionIsAllowed1 #7FFFD4
-    [SWDD-002-001-009 UDS_Session_IsAllowed] as UdsSessionIsAllowed2 #7FFFD4
-    [SWDD-002-001-010 UDS_Session_Change] as UdsSessionChange #7FFFD4
-    [SWDD-002-001-011 UDS_Session_Init] as UdsSessionInit #7FFFD4
-    [SWDD-002-001-012 UDS_ProcessRequestDownload] as UdsProcessRequestDownload #7FFFD4
-    [SWDD-002-001-013 UDS_ProcessTransferData] as UdsProcessTransferData #7FFFD4
-    [SWDD-002-001-014 UDS_ProcessRequestTransferExit] as UdsProcessRequestTransferExit #7FFFD4
-    [SWDD-002-001-015 UDS_ProcessRoutineControl] as UdsProcessRoutineControl #7FFFD4
     [SWDD-002-001-016 CANTP Functions] as CANTP #7FFFD4
     [SWDD-002-001-017 DCM Functions] as DCM #7FFFD4
     [SWDD-002-001-018 DEM Functions] as DEM #7FFFD4
@@ -91,54 +87,92 @@ package "SWDD-002\nService" as Service #E0FFFF {
   }
 
   component "SWDD-002-002\nFuSa.c" as FuSaService #E2EFD9 {
-    ' Units
+    [FuSa Functions] as FuSaFunctions #7FFFD4
   }
 
   component "SWDD-002-003\nSecurity.c" as SecurityService #E2EFD9 {
-    ' Units
+    [Security Functions] as SecurityFunctions #7FFFD4
   }
-  '----------------
 }
 
 '---- HAL Component ----
 package "SWDD-003\nHAL" as HAL #E0FFFF {
-  '---- Module ----
   component "SWDD-003-001\nClkHal.c" as ClkHal #E2EFD9 {
-    ' Units
     [Init Clocks for HAL] as InitClkHal #7FFFD4
   }
 
   component "SWDD-003-002\nPinIoHal.c" as PinIoHal #E2EFD9 {
-    ' Units
     [Init PinIO for HAL] as InitPinIOHal #7FFFD4
     [PinIO Output Control for HAL] as PinIoOutHal #7FFFD4
   }
-  '----------------
+
+  ' New Communication and Storage HAL Modules
+  component "SWDD-003-004\nCANHal.c" as CANHal #E2EFD9 {
+    [Init CAN for HAL] as InitCANHal #7FFFD4
+    [CAN Tx for HAL] as CANTxHal #7FFFD4
+    [CAN Rx for HAL] as CANRxHal #7FFFD4
+  }
+
+  component "SWDD-003-005\nUARTHal.c" as UARTHal #E2EFD9 {
+    [Init UART for HAL] as InitUARTHal #7FFFD4
+    [UART Tx for HAL] as UARTTxHal #7FFFD4
+    [UART Rx for HAL] as UARTRxHal #7FFFD4
+  }
+
+  component "SWDD-003-006\nFLSHal.c" as FLSHal #E2EFD9 {
+    [Init FLS for HAL] as InitFLSHal #7FFFD4
+    [FLS Read for HAL] as FLSReadHal #7FFFD4
+    [FLS Write for HAL] as FLSWriteHal #7FFFD4
+  }
+
+  component "SWDD-003-007\nFEEHal.c" as FEEHal #E2EFD9 {
+    [Init FEE for HAL] as InitFEEHal #7FFFD4
+    [FEE Read for HAL] as FEEReadHal #7FFFD4
+    [FEE Write for HAL] as FEEWriteHal #7FFFD4
+  }
 }
 
 '---- OS Component ----
 package "SWDD-004\nOS" as OS #E0FFFF {
-  '---- Module ----
   component "freeRTOS Modules" as freeRTOSModules #E2EFD9 {
-    ' Units
   }
-  '----------------
 }
 
 '---- Drivers Component ----
 package "SWDD-005\nDrivers" as Drivers #E0FFFF {
-  '---- Module ----
   component "SWDD-005-001\nClkDrv.c" as ClkDrv #E2EFD9 {
-    ' Units
     [Init Clocks Driver] as InitClkDrv #7FFFD4
   }
 
   component "SWDD-005-002\nPinIoDrv.c" as PinIoDrv #E2EFD9 {
-    ' Units
     [Init PinIO Driver] as InitPinIODrv #7FFFD4
     [PinIO Output Control Driver] as PinIoOutDrv #7FFFD4
   }
-  '----------------
+
+  ' New Communication and Storage Driver Modules
+  component "SWDD-005-004\nCANDrv.c" as CANDrv #E2EFD9 {
+    [Init CAN Driver] as InitCANDrv #7FFFD4
+    [CAN Tx Driver] as CANTxDrv #7FFFD4
+    [CAN Rx Driver] as CANRxDrv #7FFFD4
+  }
+
+  component "SWDD-005-005\nUARTDrv.c" as UARTDrv #E2EFD9 {
+    [Init UART Driver] as InitUARTDrv #7FFFD4
+    [UART Tx Driver] as UARTTxDrv #7FFFD4
+    [UART Rx Driver] as UARTRxDrv #7FFFD4
+  }
+
+  component "SWDD-005-006\nFLSDrv.c" as FLSDrv #E2EFD9 {
+    [Init FLS Driver] as InitFLSDrv #7FFFD4
+    [FLS Read Driver] as FLSReadDrv #7FFFD4
+    [FLS Write Driver] as FLSWriteDrv #7FFFD4
+  }
+
+  component "SWDD-005-007\nFEEDrv.c" as FEEDrv #E2EFD9 {
+    [Init FEE Driver] as InitFEEDrv #7FFFD4
+    [FEE Read Driver] as FEEReadDrv #7FFFD4
+    [FEE Write Driver] as FEEWriteDrv #7FFFD4
+  }
 }
 
 '---- join modules ----
@@ -158,9 +192,52 @@ Task100msProcessApp --> Task100msApp
 Task1sProcessApp --> Task1sApp
 Task1sApp --> PinIoOutHal
 PinIoOutHal --> PinIoOutDrv
-'----------------------
+
+' New connections for Communication and Storage modules
+InitIfApp --> InitCANApp
+InitCANApp --> InitCANHal
+InitCANHal --> InitCANDrv
+CANTxApp --> CANTxHal
+CANTxHal --> CANTxDrv
+CANRxApp --> CANRxHal
+CANRxHal --> CANRxDrv
+
+InitIfApp --> InitUARTApp
+InitUARTApp --> InitUARTHal
+InitUARTHal --> InitUARTDrv
+UARTTxApp --> UARTTxHal
+UARTTxHal --> UARTTxDrv
+UARTRxApp --> UARTRxHal
+UARTRxHal --> UARTRxDrv
+
+InitIfApp --> InitFlashApp
+InitFlashApp --> InitFLSHal
+InitFLSHal --> InitFLSDrv
+FlashReadApp --> FLSReadHal
+FLSReadHal --> FLSReadDrv
+FlashWriteApp --> FLSWriteHal
+FLSWriteHal --> FLSWriteDrv
+
+InitIfApp --> InitUds
+
+InitFlashApp --> InitFEEHal
+InitFEEHal --> InitFEEDrv
+FlashReadApp --> FEEReadHal
+FEEReadHal --> FEEReadDrv
+FlashWriteApp --> FEEWriteHal
+FEEWriteHal --> FEEWriteDrv
+
+' New connections from Service to HAL
+CANTP --> CANTxHal
+CANTP --> CANRxHal
+DCM --> UARTTxHal
+DCM --> UARTRxHal
+DEM --> FLSReadHal
+DEM --> FLSWriteHal
+NVM --> FEEReadHal
+NVM --> FEEWriteHal
+FuSaFunctions --> PinIoOutHal
+SecurityFunctions --> FLSReadHal
+SecurityFunctions --> FLSWriteHal
 
 @enduml
-
-
-
